@@ -10,6 +10,7 @@ pub struct Config {
     pub zkcodex: Option<ZkcodexConfig>,
     pub onchaingm: Option<OnchainGmConfig>,
     pub swaparc: Option<SwaparcConfig>,
+    pub axpha: Option<AxphaConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -57,6 +58,19 @@ pub struct SwaparcAddLpConfig {
     pub usdc_eurc: Option<u32>,
     pub usdc_swprc: Option<u32>,
     pub eurc_swprc: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct AxphaConfig {
+    pub enabled: bool,
+    pub swaps: Option<AxphaSwapsConfig>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct AxphaSwapsConfig {
+    pub usdc_to_eurc: Option<u32>,
+    pub usdc_to_ad: Option<u32>,
+    pub usdc_to_circle: Option<u32>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -125,6 +139,20 @@ impl Config {
         self.swaparc.as_ref()
     }
 
+    pub fn axpha_enabled(&self) -> bool {
+        self.axpha.as_ref().map(|c| {
+            if !c.enabled { return false; }
+            let eurc = c.swaps.as_ref().and_then(|s| s.usdc_to_eurc).unwrap_or(0) > 0;
+            let ad = c.swaps.as_ref().and_then(|s| s.usdc_to_ad).unwrap_or(0) > 0;
+            let circle = c.swaps.as_ref().and_then(|s| s.usdc_to_circle).unwrap_or(0) > 0;
+            eurc || ad || circle
+        }).unwrap_or(false)
+    }
+
+    pub fn axpha_config(&self) -> Option<&AxphaConfig> {
+        self.axpha.as_ref()
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -156,6 +184,10 @@ pub fn load_config() -> Result<Config> {
                 "enabled": true,
                 "swaps": { "usdc_to_swprc": 1, "eurc_to_swprc": 1 },
                 "add_lp": { "usdc_eurc": 1, "usdc_swprc": 1, "eurc_swprc": 1 }
+            },
+            "axpha": {
+                "enabled": true,
+                "swaps": { "usdc_to_eurc": 1, "usdc_to_ad": 1, "usdc_to_circle": 1 }
             },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });

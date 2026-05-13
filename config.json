@@ -44,6 +44,14 @@
       "eurc_swprc": 1
     }
   },
+  "axpha": {
+    "enabled": true,
+    "swaps": {
+      "usdc_to_eurc": 1,
+      "usdc_to_ad": 1,
+      "usdc_to_circle": 1
+    }
+  },
   "loop_cycle": {
     "enabled": false,
     "sleep_seconds": 7200

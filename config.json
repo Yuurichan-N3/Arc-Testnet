@@ -1,0 +1,51 @@
+{
+  "watchoor": {
+    "enabled": true,
+    "times": 1
+  },
+  "super_bridge": {
+    "enabled": true,
+    "times": 1
+  },
+  "onchaingm": {
+    "enabled": true,
+    "gm_onchain": {
+      "enabled": true,
+      "times": 1
+    },
+    "mint_badge": {
+      "enabled": true,
+      "times": 1
+    },
+    "deploy": {
+      "enabled": true,
+      "times": 1
+    }
+  },
+  "zkcodex": {
+    "enabled": true,
+    "say_gm": {
+      "enabled": true
+    },
+    "deploy_contract": {
+      "enabled": true,
+      "times": 1
+    }
+  },
+  "swaparc": {
+    "enabled": true,
+    "swaps": {
+      "usdc_to_swprc": 1,
+      "eurc_to_swprc": 1
+    },
+    "add_lp": {
+      "usdc_eurc": 1,
+      "usdc_swprc": 1,
+      "eurc_swprc": 1
+    }
+  },
+  "loop_cycle": {
+    "enabled": false,
+    "sleep_seconds": 7200
+  }
+}

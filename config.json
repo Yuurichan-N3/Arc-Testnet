@@ -52,8 +52,23 @@
       "usdc_to_circle": 1
     }
   },
+  "curvedex": {
+    "enabled": true,
+    "slippage_bps": 50,
+    "swaps": {
+      "usdc_to_wusdc": 1,
+      "wusdc_to_wbtc": 0,
+      "wusdc_to_art": 1
+    },
+    "add_lp": {
+      "usdc_eurc": 1
+    },
+    "stake_deposit": {
+      "usdc_eurc": 1
+    }
+  },
   "loop_cycle": {
-    "enabled": false,
-    "sleep_seconds": 7200
+    "enabled": true,
+    "sleep_seconds": 3600
   }
 }

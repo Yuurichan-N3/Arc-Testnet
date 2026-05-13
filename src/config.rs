@@ -11,6 +11,7 @@ pub struct Config {
     pub onchaingm: Option<OnchainGmConfig>,
     pub swaparc: Option<SwaparcConfig>,
     pub axpha: Option<AxphaConfig>,
+    pub curvedex: Option<CurvedexConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -58,6 +59,32 @@ pub struct SwaparcAddLpConfig {
     pub usdc_eurc: Option<u32>,
     pub usdc_swprc: Option<u32>,
     pub eurc_swprc: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct CurvedexConfig {
+    pub enabled: bool,
+    pub slippage_bps: Option<u32>,
+    pub swaps: Option<CurvedexSwapsConfig>,
+    pub add_lp: Option<CurvedexAddLpConfig>,
+    pub stake_deposit: Option<CurvedexStakeConfig>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct CurvedexSwapsConfig {
+    pub usdc_to_wusdc: Option<u32>,
+    pub wusdc_to_wbtc: Option<u32>,
+    pub wusdc_to_art: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct CurvedexAddLpConfig {
+    pub usdc_eurc: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct CurvedexStakeConfig {
+    pub usdc_eurc: Option<u32>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -139,6 +166,22 @@ impl Config {
         self.swaparc.as_ref()
     }
 
+    pub fn curvedex_enabled(&self) -> bool {
+        self.curvedex.as_ref().map(|c| {
+            if !c.enabled { return false; }
+            let usdc_wusdc = c.swaps.as_ref().and_then(|s| s.usdc_to_wusdc).unwrap_or(0) > 0;
+            let wusdc_wbtc = c.swaps.as_ref().and_then(|s| s.wusdc_to_wbtc).unwrap_or(0) > 0;
+            let wusdc_art  = c.swaps.as_ref().and_then(|s| s.wusdc_to_art).unwrap_or(0) > 0;
+            let add_lp     = c.add_lp.as_ref().and_then(|a| a.usdc_eurc).unwrap_or(0) > 0;
+            let stake      = c.stake_deposit.as_ref().and_then(|s| s.usdc_eurc).unwrap_or(0) > 0;
+            usdc_wusdc || wusdc_wbtc || wusdc_art || add_lp || stake
+        }).unwrap_or(false)
+    }
+
+    pub fn curvedex_config(&self) -> Option<&CurvedexConfig> {
+        self.curvedex.as_ref()
+    }
+
     pub fn axpha_enabled(&self) -> bool {
         self.axpha.as_ref().map(|c| {
             if !c.enabled { return false; }
@@ -188,6 +231,13 @@ pub fn load_config() -> Result<Config> {
             "axpha": {
                 "enabled": true,
                 "swaps": { "usdc_to_eurc": 1, "usdc_to_ad": 1, "usdc_to_circle": 1 }
+            },
+            "curvedex": {
+                "enabled": true,
+                "slippage_bps": 50,
+                "swaps": { "usdc_to_wusdc": 1, "wusdc_to_wbtc": 0, "wusdc_to_art": 1 },
+                "add_lp": { "usdc_eurc": 1 },
+                "stake_deposit": { "usdc_eurc": 1 }
             },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });

@@ -146,6 +146,17 @@ async fn run() -> Result<()> {
                 did_any = true;
             }
 
+            if cfg.curvedex_enabled() {
+                if did_any { println!(); }
+                if let Some(ccfg) = cfg.curvedex_config() {
+                    match categories::curvedex::run(&client, nonce, ccfg).await {
+                        Ok(n) => nonce = n,
+                        Err(_) => lr("Curve Dex category failed and continued"),
+                    }
+                }
+                did_any = true;
+            }
+
             let _ = (nonce, did_any);
             lg(&format!("Wallet {} processing completed", entry.idx));
         }

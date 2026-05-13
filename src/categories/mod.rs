@@ -4,3 +4,4 @@ pub mod zkcodex;
 pub mod onchaingm;
 pub mod swaparc;
 pub mod axpha;
+pub mod curvedex;

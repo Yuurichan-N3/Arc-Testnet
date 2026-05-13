@@ -1,8 +1,8 @@
 <div align="center">
 
-<img width="100%" alt="header" src="https://capsule-render.vercel.app/api?type=waving&height=210&text=Arc%20Testnet%20Bot&fontAlign=50&fontAlignY=36&fontSize=56&desc=Watchoor%20%7C%20SuperBridge%20%7C%20ZK%20Codex%20%7C%20OnchainGM%20%7C%20SwapArc&descAlign=50&descAlignY=58"/>
+<img width="100%" alt="header" src="https://capsule-render.vercel.app/api?type=waving&height=210&text=Arc%20Testnet%20Bot&fontAlign=50&fontAlignY=36&fontSize=56&desc=Watchoor%20%7C%20SuperBridge%20%7C%20ZK%20Codex%20%7C%20OnchainGM%20%7C%20SwapArc%20%7C%20Axpha&descAlign=50&descAlignY=58"/>
 
-<img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Auto+Watchoor+%7C+Good+Morning+%26+Good+Night;Auto+SuperBridge+USDC+Cross-chain;Auto+ZK+Codex+Say+GM+%26+Deploy+Contract;Auto+OnchainGM+%7C+Mint+Badge+%7C+Deploy;Auto+SwapArc+%7C+Swap+%26+Add+Liquidity"/>
+<img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Auto+Watchoor+%7C+Good+Morning+%26+Good+Night;Auto+SuperBridge+USDC+Cross-chain;Auto+ZK+Codex+Say+GM+%26+Deploy+Contract;Auto+OnchainGM+%7C+Mint+Badge+%7C+Deploy;Auto+SwapArc+%7C+Swap+%26+Add+Liquidity;Auto+Axpha+%7C+Swap+USDC+to+EURC+%2F+AD+%2F+CIRCLE"/>
 
 <p>
   <img alt="rust" src="https://img.shields.io/badge/Rust-2021-f74c00?logo=rust&logoColor=white"/>
@@ -13,7 +13,7 @@
 
 <p>
   <b>Arc Testnet Bot</b> is a full automation bot for the Arc Testnet network.<br/>
-  It handles multiple on-chain activity categories in one cycle: Watchoor interactions, SuperBridge USDC deposits, ZK Codex GM & contract deployments, OnchainGM with badge minting, and SwapArc token swaps with liquidity provisioning all running automatically across multiple wallets.<br/>
+  It handles multiple on-chain activity categories in one cycle: Watchoor interactions, SuperBridge USDC deposits, ZK Codex GM & contract deployments, OnchainGM with badge minting, SwapArc token swaps with liquidity provisioning, and Axpha USDC swaps all running automatically across multiple wallets.<br/>
   Built and distributed by <b>Yuurisandesu</b>.
 </p>
 
@@ -108,6 +108,9 @@ The bot submits a **GM Onchain** transaction, followed by **Mint Badge** and a *
 ### 🔄 SwapArc
 The bot executes **token swaps** (USDC → SWPRC and EURC → SWPRC) and **adds liquidity** to three pools (USDC/EURC, USDC/SWPRC, EURC/SWPRC) on SwapArc DEX. Each swap and LP action includes automatic token approval before execution.
 
+### 💱 Axpha
+The bot executes swaps on the Axpha DEX, supporting three trading pairs from USDC: **USDC → EURC**, **USDC → AD**, and **USDC → CIRCLE**. Each pair is individually configurable with a run count per cycle. Swap value and deadline are handled automatically per transaction.
+
 ### 👛 Multi Wallet
 All wallets defined in `.env` are processed sequentially within every cycle. Each wallet gets its own RPC connection and the wallet index is shown in logs for easy tracking.
 
@@ -139,7 +142,8 @@ Arc-Testnet/
 │       ├── super_bridge/            # USDC cross-chain burn deposit
 │       ├── zkcodex/                 # Say GM, Deploy Contract
 │       ├── onchaingm/               # GM Onchain, Mint Badge, Deploy
-│       └── swaparc/                 # Swap tokens, Add liquidity
+│       ├── swaparc/                 # Swap tokens, Add liquidity
+│       └── axpha/                   # Swap USDC to EURC / AD / CIRCLE
 ├── assets/
 │   └── standard.flf                # ASCII font for banner
 ├── Cargo.toml                       # Project manifest and dependencies

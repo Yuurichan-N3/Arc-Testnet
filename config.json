@@ -67,6 +67,9 @@
       "usdc_eurc": 1
     }
   },
+  "sweethaus": {
+    "enabled": true
+  },
   "loop_cycle": {
     "enabled": true,
     "sleep_seconds": 3600

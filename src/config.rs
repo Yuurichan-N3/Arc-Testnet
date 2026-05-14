@@ -12,6 +12,7 @@ pub struct Config {
     pub swaparc: Option<SwaparcConfig>,
     pub axpha: Option<AxphaConfig>,
     pub curvedex: Option<CurvedexConfig>,
+    pub sweethaus: Option<SweethausConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -98,6 +99,11 @@ pub struct AxphaSwapsConfig {
     pub usdc_to_eurc: Option<u32>,
     pub usdc_to_ad: Option<u32>,
     pub usdc_to_circle: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct SweethausConfig {
+    pub enabled: bool,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -196,6 +202,14 @@ impl Config {
         self.axpha.as_ref()
     }
 
+    pub fn sweethaus_enabled(&self) -> bool {
+        self.sweethaus.as_ref().map(|c| c.enabled).unwrap_or(false)
+    }
+
+    pub fn sweethaus_config(&self) -> Option<&SweethausConfig> {
+        self.sweethaus.as_ref()
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -239,6 +253,7 @@ pub fn load_config() -> Result<Config> {
                 "add_lp": { "usdc_eurc": 1 },
                 "stake_deposit": { "usdc_eurc": 1 }
             },
+            "sweethaus": { "enabled": true },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

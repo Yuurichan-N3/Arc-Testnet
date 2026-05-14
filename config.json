@@ -70,6 +70,15 @@
   "sweethaus": {
     "enabled": true
   },
+  "onmifun": {
+    "enabled": true,
+    "swap": {
+      "enabled": true
+    },
+    "add_lp": {
+      "enabled": true
+    }
+  },
   "loop_cycle": {
     "enabled": true,
     "sleep_seconds": 3600

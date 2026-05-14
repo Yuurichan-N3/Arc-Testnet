@@ -13,6 +13,7 @@ pub struct Config {
     pub axpha: Option<AxphaConfig>,
     pub curvedex: Option<CurvedexConfig>,
     pub sweethaus: Option<SweethausConfig>,
+    pub onmifun: Option<OnmifunConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -103,6 +104,23 @@ pub struct AxphaSwapsConfig {
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SweethausConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct OnmifunConfig {
+    pub enabled: bool,
+    pub swap: Option<OnmifunSwapConfig>,
+    pub add_lp: Option<OnmifunAddLpConfig>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct OnmifunSwapConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct OnmifunAddLpConfig {
     pub enabled: bool,
 }
 
@@ -210,6 +228,19 @@ impl Config {
         self.sweethaus.as_ref()
     }
 
+    pub fn onmifun_enabled(&self) -> bool {
+        self.onmifun.as_ref().map(|c| {
+            if !c.enabled { return false; }
+            let swap = c.swap.as_ref().map(|s| s.enabled).unwrap_or(false);
+            let lp = c.add_lp.as_ref().map(|a| a.enabled).unwrap_or(false);
+            swap || lp
+        }).unwrap_or(false)
+    }
+
+    pub fn onmifun_config(&self) -> Option<&OnmifunConfig> {
+        self.onmifun.as_ref()
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -254,6 +285,11 @@ pub fn load_config() -> Result<Config> {
                 "stake_deposit": { "usdc_eurc": 1 }
             },
             "sweethaus": { "enabled": true },
+            "onmifun": {
+                "enabled": true,
+                "swap": { "enabled": true },
+                "add_lp": { "enabled": true }
+            },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

@@ -6,3 +6,4 @@ pub mod swaparc;
 pub mod axpha;
 pub mod curvedex;
 pub mod sweethaus;
+pub mod onmifun;

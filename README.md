@@ -8,6 +8,7 @@
   <img alt="rust" src="https://img.shields.io/badge/Rust-2021-f74c00?logo=rust&logoColor=white"/>
   <img alt="platform" src="https://img.shields.io/badge/Platform-Arc%20Testnet-111111"/>
   <img alt="multi-wallet" src="https://img.shields.io/badge/Multi--Wallet-Supported-111111"/>
+  <img alt="build" src="https://github.com/Yuurichan-N3/Arc-Testnet/actions/workflows/build.yml/badge.svg"/>
   <img alt="author" src="https://img.shields.io/badge/by-Yuurisandesu-111111"/>
 </p>
 
@@ -61,12 +62,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 ```
 
-### Clone and Build
+### Clone the Repository
 
 ```bash
 git clone https://github.com/Yuurichan-N3/Arc-Testnet.git
 cd Arc-Testnet
-cargo build --release
 ```
 
 ---
@@ -103,16 +103,79 @@ socks5://user:pass@host:port
 
 ## ▶️ Running the Bot
 
-**Linux / macOS / Termux (Ubuntu proot):**
+There are several ways to run the bot depending on your preference and platform.
+
+### Using run.sh (Linux / macOS / Termux)
+
+`run.sh` is an all-in-one helper script that handles building and running in a single command. Make it executable first:
 
 ```bash
-./target/release/arc-bot
+chmod +x run.sh
 ```
 
-**Windows:**
+Then choose a mode:
 
 ```bash
+./run.sh direct    # build and run in foreground (default)
+./run.sh nohup     # build and run in background, logs saved to arc-bot.log
+./run.sh screen    # build and run in a detached screen session
+./run.sh tmux      # build and run in a detached tmux session
+./run.sh logs      # tail the log file
+./run.sh stop      # stop the running bot process
+```
+
+For background modes, attach to the session anytime:
+
+```bash
+# screen
+screen -r arc-bot
+
+# tmux
+tmux attach -t arc-bot
+```
+
+### Using make (Linux / macOS)
+
+```bash
+make release   # optimized release build
+make start     # build release and run immediately
+make run       # build debug and run
+make check     # check for errors without building
+make fmt       # format the code
+make clean     # remove all build artifacts
+make size      # show release binary size
+```
+
+### Manual (all platforms)
+
+Build first:
+
+```bash
+cargo build --release
+```
+
+Then run:
+
+```bash
+# Linux / macOS / Termux
+./target/release/arc-bot
+
+# Windows
 .\target\release\arc-bot.exe
+```
+
+### Download Prebuilt Binary (Linux x86_64)
+
+If you do not want to build from source, a prebuilt Linux binary is automatically compiled on every push to main via GitHub Actions.
+
+Download the latest binary from the Actions page:
+https://github.com/Yuurichan-N3/Arc-Testnet/actions/workflows/build.yml
+
+Open the latest successful run, scroll to the Artifacts section, and download `arc-bot-linux-x86_64`. The binary is retained for 7 days per build. After downloading, make it executable and run:
+
+```bash
+chmod +x arc-bot
+./arc-bot
 ```
 
 ---
@@ -158,6 +221,9 @@ Proxies are loaded from `proxy.txt` and rotated across wallets and RPC connectio
 
 ```text
 Arc-Testnet/
+├── .github/
+│   └── workflows/
+│       └── build.yml                # CI: auto build release binary on push
 ├── src/
 │   ├── main.rs                      # Entry point, main cycle loop
 │   ├── config.rs                    # Config loading and structs
@@ -182,6 +248,8 @@ Arc-Testnet/
 │   └── standard.flf                # ASCII font for banner
 ├── Cargo.toml                       # Project manifest and dependencies
 ├── Cargo.lock
+├── Makefile                         # make targets: build, run, release, start, clean, size
+├── run.sh                           # Run helper: direct, nohup, screen, tmux, logs, stop
 ├── config.json                      # Auto-generated on first run
 ├── proxy.txt                        # Proxy list
 └── .env.example                     # Private key template

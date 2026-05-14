@@ -1,8 +1,8 @@
 <div align="center">
 
-<img width="100%" alt="header" src="https://capsule-render.vercel.app/api?type=waving&height=210&text=Arc%20Testnet%20Bot&fontAlign=50&fontAlignY=36&fontSize=56&desc=Watchoor%20%7C%20SuperBridge%20%7C%20ZK%20Codex%20%7C%20OnchainGM%20%7C%20SwapArc%20%7C%20Axpha%20%7C%20Curve%20Dex&descAlign=50&descAlignY=58"/>
+<img width="100%" alt="header" src="https://capsule-render.vercel.app/api?type=waving&height=210&text=Arc%20Testnet%20Bot&fontAlign=50&fontAlignY=36&fontSize=56&desc=Watchoor%20%7C%20SuperBridge%20%7C%20ZK%20Codex%20%7C%20OnchainGM%20%7C%20SwapArc%20%7C%20Axpha%20%7C%20Curve%20Dex%20%7C%20Sweet%20Haus&descAlign=50&descAlignY=58"/>
 
-<img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Auto+Watchoor+%7C+Good+Morning+%26+Good+Night;Auto+SuperBridge+USDC+Cross-chain;Auto+ZK+Codex+Say+GM+%26+Deploy+Contract;Auto+OnchainGM+%7C+Mint+Badge+%7C+Deploy;Auto+SwapArc+%7C+Swap+%26+Add+Liquidity;Auto+Axpha+%7C+Swap+USDC+to+EURC+%2F+AD+%2F+CIRCLE;Auto+Curve+Dex+%7C+Swap+%2F+Add+LP+%2F+Stake+Deposit"/>
+<img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Auto+Watchoor+%7C+Good+Morning+%26+Good+Night;Auto+SuperBridge+USDC+Cross-chain;Auto+ZK+Codex+Say+GM+%26+Deploy+Contract;Auto+OnchainGM+%7C+Mint+Badge+%7C+Deploy;Auto+SwapArc+%7C+Swap+%26+Add+Liquidity;Auto+Axpha+%7C+Swap+USDC+to+EURC+%2F+AD+%2F+CIRCLE;Auto+Curve+Dex+%7C+Swap+%2F+Add+LP+%2F+Stake+Deposit;Auto+Sweet+Haus+%7C+Mint+NFT"/>
 
 <p>
   <img alt="rust" src="https://img.shields.io/badge/Rust-2021-f74c00?logo=rust&logoColor=white"/>
@@ -13,7 +13,7 @@
 
 <p>
   <b>Arc Testnet Bot</b> is a full automation bot for the Arc Testnet network.<br/>
-  It handles multiple on-chain activity categories in one cycle: Watchoor interactions, SuperBridge USDC deposits, ZK Codex GM and contract deployments, OnchainGM with badge minting, SwapArc token swaps with liquidity provisioning, Axpha USDC swaps, and Curve Dex swaps with LP and staking -- all running automatically across multiple wallets.<br/>
+  It handles multiple on-chain activity categories in one cycle: Watchoor interactions, SuperBridge USDC deposits, ZK Codex GM and contract deployments, OnchainGM with badge minting, SwapArc token swaps with liquidity provisioning, Axpha USDC swaps, Curve Dex swaps with LP and staking, and Sweet Haus NFT minting -- all running automatically across multiple wallets.<br/>
   Built and distributed by <b>Yuurisandesu</b>.
 </p>
 
@@ -23,23 +23,49 @@
 
 ## ⚙️ Requirements
 
-- [Rust](https://rustup.rs/) `1.70+` (includes `cargo`)
+- Rust `1.70+` (includes `cargo`)
 - Git
 
 ---
 
 ## 🚀 Installation
 
-**Clone the repository:**
+### Install Rust
+
+**Linux / macOS:**
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env
+```
+
+**Windows:**
+
+Download and run the installer from https://rustup.rs, then restart your terminal.
+
+**Termux (Android):**
+
+Termux does not support the Rust toolchain natively at full capacity. The recommended approach is to use a Ubuntu proot environment via `proot-distro`:
+
+```bash
+pkg update && pkg install proot-distro
+proot-distro install ubuntu
+proot-distro login ubuntu
+```
+
+Once inside the Ubuntu environment, install dependencies and Rust:
+
+```bash
+apt update && apt install -y curl git build-essential pkg-config libssl-dev
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env
+```
+
+### Clone and Build
 
 ```bash
 git clone https://github.com/Yuurichan-N3/Arc-Testnet.git
 cd Arc-Testnet
-```
-
-**Build the binary:**
-
-```bash
 cargo build --release
 ```
 
@@ -77,7 +103,7 @@ socks5://user:pass@host:port
 
 ## ▶️ Running the Bot
 
-**Linux / macOS:**
+**Linux / macOS / Termux (Ubuntu proot):**
 
 ```bash
 ./target/release/arc-bot
@@ -114,6 +140,9 @@ The bot executes swaps on the Axpha DEX, supporting three trading pairs from USD
 ### 📈 Curve Dex
 The bot interacts with the Curve DEX across three actions. For swaps, it supports USDC to WUSDC, WUSDC to WBTC, and WUSDC to ART -- each with automatic approval, a live on-chain quote, configurable slippage tolerance in basis points, and a preflight simulation before execution. For Add LP, the bot approves both USDC and EURC then adds liquidity to the USDC/EURC pool. For Stake Deposit, the bot approves the LP token and deposits it into the staking contract. Each of the three actions is individually configurable with a run count per cycle.
 
+### 🍬 Sweet Haus
+The bot mints an NFT from the Sweet Haus contract by submitting a claim transaction with the wallet address as the receiver. The mint value and calldata are encoded automatically. Configurable run count per cycle.
+
 ### 👛 Multi Wallet
 All wallets defined in `.env` are processed sequentially within every cycle. Each wallet gets its own RPC connection and the wallet index is shown in logs for easy tracking.
 
@@ -147,7 +176,8 @@ Arc-Testnet/
 │       ├── onchaingm/               # GM Onchain, Mint Badge, Deploy
 │       ├── swaparc/                 # Swap tokens, Add liquidity
 │       ├── axpha/                   # Swap USDC to EURC / AD / CIRCLE
-│       └── curvedex/                # Swap, Add LP USDC/EURC, Stake Deposit
+│       ├── curvedex/                # Swap, Add LP USDC/EURC, Stake Deposit
+│       └── sweethaus/               # Mint NFT via claim transaction
 ├── assets/
 │   └── standard.flf                # ASCII font for banner
 ├── Cargo.toml                       # Project manifest and dependencies

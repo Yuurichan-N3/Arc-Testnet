@@ -14,6 +14,7 @@ pub struct Config {
     pub curvedex: Option<CurvedexConfig>,
     pub sweethaus: Option<SweethausConfig>,
     pub onmifun: Option<OnmifunConfig>,
+    pub flowthree: Option<FlowthreeConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -121,6 +122,11 @@ pub struct OnmifunSwapConfig {
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct OnmifunAddLpConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct FlowthreeConfig {
     pub enabled: bool,
 }
 
@@ -241,6 +247,10 @@ impl Config {
         self.onmifun.as_ref()
     }
 
+    pub fn flowthree_enabled(&self) -> bool {
+        self.flowthree.as_ref().map(|c| c.enabled).unwrap_or(false)
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -290,6 +300,7 @@ pub fn load_config() -> Result<Config> {
                 "swap": { "enabled": true },
                 "add_lp": { "enabled": true }
             },
+            "flowthree": { "enabled": true },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

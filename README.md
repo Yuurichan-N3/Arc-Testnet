@@ -1,8 +1,8 @@
 <div align="center">
 
-<img width="100%" alt="header" src="https://capsule-render.vercel.app/api?type=waving&height=210&text=Arc%20Testnet%20Bot&fontAlign=50&fontAlignY=36&fontSize=56&desc=Watchoor%20%7C%20SuperBridge%20%7C%20ZK%20Codex%20%7C%20OnchainGM%20%7C%20SwapArc%20%7C%20Axpha%20%7C%20Curve%20Dex%20%7C%20Sweet%20Haus&descAlign=50&descAlignY=58"/>
+<img width="100%" alt="header" src="https://capsule-render.vercel.app/api?type=waving&height=210&text=Arc%20Testnet%20Bot&fontAlign=50&fontAlignY=36&fontSize=56&desc=Multi-Category%20On-Chain%20Automation%20%7C%20Multi-Wallet%20%7C%20Proxy%20Support&descAlign=50&descAlignY=58"/>
 
-<img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Auto+Watchoor+%7C+Good+Morning+%26+Good+Night;Auto+SuperBridge+USDC+Cross-chain;Auto+ZK+Codex+Say+GM+%26+Deploy+Contract;Auto+OnchainGM+%7C+Mint+Badge+%7C+Deploy;Auto+SwapArc+%7C+Swap+%26+Add+Liquidity;Auto+Axpha+%7C+Swap+USDC+to+EURC+%2F+AD+%2F+CIRCLE;Auto+Curve+Dex+%7C+Swap+%2F+Add+LP+%2F+Stake+Deposit;Auto+Sweet+Haus+%7C+Mint+NFT"/>
+<img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Auto+Watchoor+%7C+Good+Morning+%26+Good+Night;Auto+SuperBridge+USDC+Cross-chain;Auto+ZK+Codex+Say+GM+%26+Deploy+Contract;Auto+OnchainGM+%7C+Mint+Badge+%7C+Deploy;Auto+SwapArc+%7C+Swap+%26+Add+Liquidity;Auto+Axpha+%7C+Swap+USDC+to+EURC+%2F+AD+%2F+CIRCLE;Auto+Curve+Dex+%7C+Swap+%2F+Add+LP+%2F+Stake+Deposit;Auto+Sweet+Haus+%7C+Mint+NFT;Auto+Onmifun+%7C+Swap+%26+Add+LP;Auto+Flow+Three+%7C+Deposit+%26+Withdraw;Auto+Omnihub+%7C+Mint+Shrimp+NFT;Auto+Flow+On+Arc+%7C+Faucet+%2F+Claim+%2F+Add+LP"/>
 
 <p>
   <img alt="rust" src="https://img.shields.io/badge/Rust-2021-f74c00?logo=rust&logoColor=white"/>
@@ -14,11 +14,23 @@
 
 <p>
   <b>Arc Testnet Bot</b> is a full automation bot for the Arc Testnet network.<br/>
-  It handles multiple on-chain activity categories in one cycle: Watchoor interactions, SuperBridge USDC deposits, ZK Codex GM and contract deployments, OnchainGM with badge minting, SwapArc token swaps with liquidity provisioning, Axpha USDC swaps, Curve Dex swaps with LP and staking, and Sweet Haus NFT minting -- all running automatically across multiple wallets.<br/>
+  It handles multiple on-chain activity categories in one cycle: Watchoor interactions, SuperBridge USDC deposits, ZK Codex GM and contract deployments, OnchainGM with badge minting, SwapArc token swaps with liquidity provisioning, Axpha USDC swaps, Curve Dex swaps with LP and staking, Sweet Haus NFT minting, Onmifun swaps and LP, Flow Three deposit and withdraw, Omnihub NFT minting, and Flow On Arc faucet claiming with LP -- all running automatically across multiple wallets.<br/>
   Built and distributed by <b>Yuurisandesu</b>.
 </p>
 
 </div>
+
+---
+
+## Table of Contents
+
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Running the Bot](#-running-the-bot)
+- [Features](#-features)
+- [File Structure](#-file-structure)
+- [Disclaimer](#-disclaimer)
 
 ---
 
@@ -82,7 +94,7 @@ PRIVATEKEY_1=your_private_key_here
 PRIVATEKEY_2=your_private_key_here
 ```
 
-> Add as many `PRIVATEKEY_N` entries as wallets you want to run. All wallets are processed sequentially per cycle.
+Add as many `PRIVATEKEY_N` entries as wallets you want to run. All wallets are processed sequentially per cycle.
 
 ### 2. Proxy (proxy.txt)
 
@@ -195,7 +207,7 @@ The bot sends a **Say GM** message on-chain (auto-skipped if already done today 
 The bot submits a **GM Onchain** transaction, followed by **Mint Badge** and a **Deploy** transaction through the OnchainGM contracts. If GM is detected as already completed via preflight check, badge and deploy are automatically skipped for that cycle.
 
 ### 🔄 SwapArc
-The bot executes **token swaps** (USDC to SWPRC and EURC to SWPRC) and **adds liquidity** to three pools (USDC/EURC, USDC/SWPRC, EURC/SWPRC) on SwapArc DEX. Each swap and LP action includes automatic token approval before execution.
+The bot executes token swaps (USDC to SWPRC and EURC to SWPRC) and adds liquidity to three pools (USDC/EURC, USDC/SWPRC, EURC/SWPRC) on SwapArc DEX. Each swap and LP action includes automatic token approval before execution.
 
 ### 💱 Axpha
 The bot executes swaps on the Axpha DEX, supporting three trading pairs from USDC: USDC to EURC, USDC to AD, and USDC to CIRCLE. Each pair is individually configurable with a run count per cycle. Swap value and deadline are handled automatically per transaction.
@@ -205,6 +217,18 @@ The bot interacts with the Curve DEX across three actions. For swaps, it support
 
 ### 🍬 Sweet Haus
 The bot mints an NFT from the Sweet Haus contract by submitting a claim transaction with the wallet address as the receiver. The mint value and calldata are encoded automatically. Configurable run count per cycle.
+
+### 🎯 Onmifun
+The bot interacts with the Onmifun DEX router across two actions. For swaps, it buys **ETH to CHNOS** and **ETH to MOG** in sequence. For Add LP, it approves each token, then adds liquidity to the **ETH/CHNOS** and **ETH/MOG** pools. Both actions are individually toggleable via config.
+
+### 🌊 Flow Three
+The bot submits a **Deposit** transaction followed immediately by a **Withdraw** transaction to the Flow Three contract. Both actions run as a pair per cycle and are configurable by run count.
+
+### 🦐 Omnihub
+The bot mints a **Shrimp NFT** from the Omnihub contract by submitting a mint transaction with a fixed ETH value. Configurable run count per cycle.
+
+### 🌿 Flow On Arc
+The bot runs a full Flow On Arc cycle: it first attempts a **Faucet Claim** (auto-skipped via preflight if already claimed this period), then approves USDC, CAT, DARC, and PANDA tokens, and adds liquidity to three pools: **USDC/CAT**, **USDC/DARC**, and **USDC/PANDA**.
 
 ### 👛 Multi Wallet
 All wallets defined in `.env` are processed sequentially within every cycle. Each wallet gets its own RPC connection and the wallet index is shown in logs for easy tracking.
@@ -243,7 +267,11 @@ Arc-Testnet/
 │       ├── swaparc/                 # Swap tokens, Add liquidity
 │       ├── axpha/                   # Swap USDC to EURC / AD / CIRCLE
 │       ├── curvedex/                # Swap, Add LP USDC/EURC, Stake Deposit
-│       └── sweethaus/               # Mint NFT via claim transaction
+│       ├── sweethaus/               # Mint NFT via claim transaction
+│       ├── onmifun/                 # Swap ETH to CHNOS/MOG, Add LP ETH/CHNOS and ETH/MOG
+│       ├── flowthree/               # Deposit and Withdraw
+│       ├── omnihub/                 # Mint Shrimp NFT
+│       └── flowonarc/               # Faucet Claim, Add LP USDC/CAT, USDC/DARC, USDC/PANDA
 ├── assets/
 │   └── standard.flf                # ASCII font for banner
 ├── Cargo.toml                       # Project manifest and dependencies

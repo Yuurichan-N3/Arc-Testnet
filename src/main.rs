@@ -235,6 +235,15 @@ async fn run() -> Result<()> {
                 did_any = true;
             }
 
+            if cfg.arcfx_enabled() {
+                if did_any { println!(); }
+                match categories::arcfx::run(&client, nonce).await {
+                    Ok(n) => nonce = n,
+                    Err(_) => lr("Arc FX category failed and continued"),
+                }
+                did_any = true;
+            }
+
             let _ = (nonce, did_any);
             lg(&format!("Wallet {} processing completed", entry.idx));
         }

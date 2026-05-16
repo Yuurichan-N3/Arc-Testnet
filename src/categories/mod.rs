@@ -13,3 +13,4 @@ pub mod flowonarc;
 pub mod prestodex;
 pub mod painitiepay;
 pub mod paytag;
+pub mod arcfx;

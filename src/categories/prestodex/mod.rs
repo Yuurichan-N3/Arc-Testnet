@@ -102,7 +102,7 @@ pub async fn run(client: &Client, mut nonce: U256, cfg: &PrestodexConfig) -> Res
 
     if let Some(lp_cfg) = &cfg.add_lp {
         if lp_cfg.enabled {
-\            let approve_eurc = calldata::build_approve(router, U256::from(LP_EURC_USDC_A * 10));
+            let approve_eurc = calldata::build_approve(router, U256::from(LP_EURC_USDC_A * 10));
             match execute_tx(client, nonce, eurc, approve_eurc, U256::zero(), 100000, "Presto Dex LP EURC Allowance").await {
                 Ok(n) => nonce = n,
                 Err(e) => lr(&format!("Presto Dex approve EURC for LP failed: {}", e)),
@@ -110,7 +110,7 @@ pub async fn run(client: &Client, mut nonce: U256, cfg: &PrestodexConfig) -> Res
 
             nonce = refresh_nonce(client, nonce).await;
 
-\            let approve_usdc_lp = calldata::build_increase_allowance(router, U256::from(LP_USDC_ALLOWANCE));
+            let approve_usdc_lp = calldata::build_increase_allowance(router, U256::from(LP_USDC_ALLOWANCE));
             match execute_tx(client, nonce, usdc, approve_usdc_lp, U256::zero(), 100000, "Presto Dex LP USDC Allowance").await {
                 Ok(n) => nonce = n,
                 Err(e) => lr(&format!("Presto Dex approve USDC for LP failed: {}", e)),

@@ -70,7 +70,7 @@ pub fn build_bridge(
     let zero_bytes32 = [0u8; 32];
 
     let hook_data_str = b"cctp-forward";
-    let hook_data_len = hook_data_str.len(); // 12
+    let hook_data_len = hook_data_str.len();
     let mut hook_data_padded = [0u8; 32];
     hook_data_padded[..hook_data_len].copy_from_slice(hook_data_str);
 

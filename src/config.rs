@@ -19,6 +19,7 @@ pub struct Config {
     pub flowonarc: Option<FlowonarcConfig>,
     pub prestodex: Option<PrestodexConfig>,
     pub painitiepay: Option<PainitiepayConfig>,
+    pub paytag: Option<PaytagConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -173,6 +174,11 @@ pub struct PainitiepayConfig {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+pub struct PaytagConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 pub struct LoopConfig {
     pub enabled: bool,
     pub sleep_seconds: u64,
@@ -319,6 +325,10 @@ impl Config {
         self.painitiepay.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
 
+    pub fn paytag_enabled(&self) -> bool {
+        self.paytag.as_ref().map(|c| c.enabled).unwrap_or(false)
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -378,6 +388,7 @@ pub fn load_config() -> Result<Config> {
                 "bridge": { "enabled": true }
             },
             "painitiepay": { "enabled": true },
+            "paytag": { "enabled": true },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

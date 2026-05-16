@@ -12,3 +12,4 @@ pub mod omnihub;
 pub mod flowonarc;
 pub mod prestodex;
 pub mod painitiepay;
+pub mod paytag;

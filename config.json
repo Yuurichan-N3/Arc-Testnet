@@ -1,39 +1,39 @@
 {
   "watchoor": {
-    "enabled": true,
+    "enabled": false,
     "times": 1
   },
   "super_bridge": {
-    "enabled": true,
+    "enabled": false,
     "times": 1
   },
   "onchaingm": {
-    "enabled": true,
+    "enabled": false,
     "gm_onchain": {
-      "enabled": true,
+      "enabled": false,
       "times": 1
     },
     "mint_badge": {
-      "enabled": true,
+      "enabled": false,
       "times": 1
     },
     "deploy": {
-      "enabled": true,
+      "enabled": false,
       "times": 1
     }
   },
   "zkcodex": {
-    "enabled": true,
+    "enabled": false,
     "say_gm": {
-      "enabled": true
+      "enabled": false
     },
     "deploy_contract": {
-      "enabled": true,
+      "enabled": false,
       "times": 1
     }
   },
   "swaparc": {
-    "enabled": true,
+    "enabled": false,
     "swaps": {
       "usdc_to_swprc": 1,
       "eurc_to_swprc": 1
@@ -45,7 +45,7 @@
     }
   },
   "axpha": {
-    "enabled": true,
+    "enabled": false,
     "swaps": {
       "usdc_to_eurc": 1,
       "usdc_to_ad": 1,
@@ -53,7 +53,7 @@
     }
   },
   "curvedex": {
-    "enabled": true,
+    "enabled": false,
     "slippage_bps": 50,
     "swaps": {
       "usdc_to_wusdc": 1,
@@ -68,25 +68,28 @@
     }
   },
   "sweethaus": {
-    "enabled": true
+    "enabled": false
   },
   "onmifun": {
-    "enabled": true,
+    "enabled": false,
     "swap": {
-      "enabled": true
+      "enabled": false
     },
     "add_lp": {
-      "enabled": true
+      "enabled": false
     }
   },
   "flowthree": {
-    "enabled": true
+    "enabled": false
   },
   "omnihub": {
+    "enabled": false
+  },
+  "flowonarc": {
     "enabled": true
   },
   "loop_cycle": {
-    "enabled": true,
+    "enabled": false,
     "sleep_seconds": 3600
   }
 }

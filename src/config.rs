@@ -16,6 +16,7 @@ pub struct Config {
     pub onmifun: Option<OnmifunConfig>,
     pub flowthree: Option<FlowthreeConfig>,
     pub omnihub: Option<OmnihubConfig>,
+    pub flowonarc: Option<FlowonarcConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -133,6 +134,11 @@ pub struct FlowthreeConfig {
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct OmnihubConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct FlowonarcConfig {
     pub enabled: bool,
 }
 
@@ -261,6 +267,10 @@ impl Config {
         self.omnihub.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
 
+    pub fn flowonarc_enabled(&self) -> bool {
+        self.flowonarc.as_ref().map(|c| c.enabled).unwrap_or(false)
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -312,6 +322,7 @@ pub fn load_config() -> Result<Config> {
             },
             "flowthree": { "enabled": true },
             "omnihub": { "enabled": true },
+            "flowonarc": { "enabled": true },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

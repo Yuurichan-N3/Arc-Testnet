@@ -17,6 +17,7 @@ pub struct Config {
     pub flowthree: Option<FlowthreeConfig>,
     pub omnihub: Option<OmnihubConfig>,
     pub flowonarc: Option<FlowonarcConfig>,
+    pub prestodex: Option<PrestodexConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -139,6 +140,29 @@ pub struct OmnihubConfig {
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct FlowonarcConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct PrestodexConfig {
+    pub enabled: bool,
+    pub swap: Option<PrestodexSwapConfig>,
+    pub add_lp: Option<PrestodexAddLpConfig>,
+    pub bridge: Option<PrestodexBridgeConfig>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct PrestodexSwapConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct PrestodexAddLpConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct PrestodexBridgeConfig {
     pub enabled: bool,
 }
 
@@ -271,6 +295,20 @@ impl Config {
         self.flowonarc.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
 
+    pub fn prestodex_enabled(&self) -> bool {
+        self.prestodex.as_ref().map(|c| {
+            if !c.enabled { return false; }
+            let swap = c.swap.as_ref().map(|s| s.enabled).unwrap_or(false);
+            let lp = c.add_lp.as_ref().map(|a| a.enabled).unwrap_or(false);
+            let bridge = c.bridge.as_ref().map(|b| b.enabled).unwrap_or(false);
+            swap || lp || bridge
+        }).unwrap_or(false)
+    }
+
+    pub fn prestodex_config(&self) -> Option<&PrestodexConfig> {
+        self.prestodex.as_ref()
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -323,6 +361,12 @@ pub fn load_config() -> Result<Config> {
             "flowthree": { "enabled": true },
             "omnihub": { "enabled": true },
             "flowonarc": { "enabled": true },
+            "prestodex": {
+                "enabled": true,
+                "swap": { "enabled": true },
+                "add_lp": { "enabled": true },
+                "bridge": { "enabled": true }
+            },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

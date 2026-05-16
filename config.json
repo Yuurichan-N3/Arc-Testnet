@@ -82,6 +82,9 @@
   "flowthree": {
     "enabled": true
   },
+  "omnihub": {
+    "enabled": true
+  },
   "loop_cycle": {
     "enabled": true,
     "sleep_seconds": 3600

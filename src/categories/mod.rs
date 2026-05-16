@@ -8,3 +8,4 @@ pub mod curvedex;
 pub mod sweethaus;
 pub mod onmifun;
 pub mod flowthree;
+pub mod omnihub;

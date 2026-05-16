@@ -88,7 +88,7 @@
   "flowonarc": {
     "enabled": true
   },
-"prestodex": {
+  "prestodex": {
     "enabled": true,
     "swap": {
       "enabled": true
@@ -99,6 +99,9 @@
     "bridge": {
       "enabled": true
     }
+  },
+  "painitiepay": {
+    "enabled": true
   },
   "loop_cycle": {
     "enabled": true,

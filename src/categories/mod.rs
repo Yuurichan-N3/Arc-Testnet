@@ -11,3 +11,4 @@ pub mod flowthree;
 pub mod omnihub;
 pub mod flowonarc;
 pub mod prestodex;
+pub mod painitiepay;

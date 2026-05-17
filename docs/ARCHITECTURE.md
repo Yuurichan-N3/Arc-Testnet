@@ -29,32 +29,37 @@ This document describes the internal execution flow, module responsibilities, an
     |
     v
     +------ For Each Wallet (sequential) ------+
-    |                                          |
+    |                                           |
     |   [ connect_with_retry ]                 |
     |       |-- Rotate proxy on each attempt   |
     |       |-- Up to 6 attempts               |
     |       |-- Exponential backoff (2s..10s)  |
     |       |-- Validate via get_block_number  |
-    |                                          |
+    |                                           |
     |   [ Fetch Nonce ]                        |
     |       |-- get_transaction_count          |
     |       |-- Skip wallet on failure         |
-    |                                          |
+    |                                           |
     |   [ Run Enabled Categories ] (in order)  |
     |       |                                  |
-    |       |-- Watchoor                       |
-    |       |-- SuperBridge                    |
-    |       |-- ZK Codex                       |
-    |       |-- OnchainGM                      |
-    |       |-- SwapArc                        |
-    |       |-- Axpha                          |
-    |       |-- Curve Dex                      |
-    |       |-- Sweet Haus                     |
-    |       |-- Onmifun                        |
-    |       |-- Flow Three                     |
-    |       |-- Omnihub                        |
-    |       +-- Flow On Arc                    |
-    |                                          |
+    |       |-- 01. Watchoor                   |
+    |       |-- 02. SuperBridge                |
+    |       |-- 03. ZK Codex                   |
+    |       |-- 04. OnchainGM                  |
+    |       |-- 05. SwapArc                    |
+    |       |-- 06. Axpha                      |
+    |       |-- 07. Curve Dex                  |
+    |       |-- 08. Sweet Haus                 |
+    |       |-- 09. Onmifun                    |
+    |       |-- 10. Flow Three                 |
+    |       |-- 11. Omnihub                    |
+    |       |-- 12. Flow On Arc                |
+    |       |-- 13. Presto Dex                 |
+    |       |-- 14. Painitiepay                |
+    |       |-- 15. Paytag                     |
+    |       |-- 16. Arc FX                     |
+    |       +-- 17. Chain Streaks              |
+    |                                           |
     |   [ Category failure is non-fatal ]      |
     |   [ Nonce is passed and returned ]       |
     +-------------------------------------------+
@@ -157,11 +162,11 @@ run(client, nonce, cfg) -> Result<U256>
     |
     v
 [ Preflight check ] (if applicable)
-    |-- skip if already done today (ZK Codex Say GM, OnchainGM, Flow On Arc Faucet)
+    |-- skip if already done today (ZK Codex Say GM, OnchainGM, Flow On Arc Faucet,
+    |                                Arc FX Faucet, Arc FX Check-in, Chain Streaks)
     |
     v
-[ silent_approve ] (if token spending is required)
-    |-- only approves if allowance is not already sufficient
+[ silent_approve / execute_tx approve ] (if token spending is required)
     |
     v
 [ execute_tx ] (one or more, depending on config times)
@@ -179,7 +184,7 @@ run(client, nonce, cfg) -> Result<U256>
 
 ## Nonce Management
 
-Nonce is fetched once per wallet via `get_transaction_count` at the start of the wallet cycle. It is then passed into each category and returned incremented by 1 after every successful `execute_tx` call. For categories with internal async gaps (Curve Dex, Onmifun), a `refresh_nonce` call via `get_transaction_count` is made mid-category to re-sync with the chain in case of any discrepancy.
+Nonce is fetched once per wallet via `get_transaction_count` at the start of the wallet cycle. It is then passed into each category and returned incremented by 1 after every successful `execute_tx` call. For categories with internal async gaps (Curve Dex, Onmifun, Presto Dex, Paytag, Arc FX), a `refresh_nonce` call via `get_transaction_count` is made mid-category to re-sync with the chain in case of any discrepancy.
 
 ---
 
@@ -193,6 +198,28 @@ ProxyPool holds Vec<ProxyEntry> with an atomic index
     +-- proxy_pool.current_label() returns a display label for logging
     +-- If pool is empty, build_provider connects directly without proxy
 ```
+
+---
+
+## CI -- Automated Builds
+
+On every push to `main` or `master`, GitHub Actions runs a matrix build across three platforms simultaneously:
+
+```text
+push to main / master
+    |
+    v
+[ GitHub Actions: build.yml ]
+    |
+    +-- ubuntu-latest   -->  arc-bot-linux-x86_64    (target/release/arc-bot)
+    +-- windows-latest  -->  arc-bot-windows-x86_64  (target/release/arc-bot.exe)
+    +-- macos-latest    -->  arc-bot-macos-aarch64   (target/release/arc-bot)
+    |
+    v
+[ Upload artifacts, retained for 7 days ]
+```
+
+Each job installs the stable Rust toolchain via `dtolnay/rust-toolchain`, caches the Cargo registry and `target/` directory keyed by `Cargo.lock` hash, runs `cargo build --release`, and uploads the binary as a named artifact.
 
 ---
 
@@ -213,5 +240,10 @@ config.json
     +-- flowthree         { enabled, times }
     +-- omnihub           { enabled, times }
     +-- flowonarc         { enabled }
+    +-- prestodex         { enabled, swap: { enabled }, add_lp: { enabled }, bridge: { enabled } }
+    +-- painitiepay       { enabled }
+    +-- paytag            { enabled }
+    +-- arcfx             { enabled }
+    +-- chainstreak       { enabled }
     +-- loop_cycle        { enabled, sleep_seconds }
 ```

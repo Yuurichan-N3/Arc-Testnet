@@ -23,6 +23,7 @@ pub struct Config {
     pub arcfx: Option<ArcfxConfig>,
     pub chainstreak: Option<ChainstreakConfig>,
     pub chainsgreets: Option<ChainsgreetsConfig>,
+    pub paymearc: Option<PaymearcConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -197,6 +198,11 @@ pub struct ChainsgreetsConfig {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+pub struct PaymearcConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 pub struct LoopConfig {
     pub enabled: bool,
     pub sleep_seconds: u64,
@@ -359,6 +365,10 @@ impl Config {
         self.chainsgreets.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
 
+    pub fn paymearc_enabled(&self) -> bool {
+        self.paymearc.as_ref().map(|c| c.enabled).unwrap_or(false)
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -422,6 +432,7 @@ pub fn load_config() -> Result<Config> {
             "arcfx": { "enabled": true },
             "chainstreak": { "enabled": true },
             "chainsgreets": { "enabled": true },
+            "paymearc": { "enabled": true },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

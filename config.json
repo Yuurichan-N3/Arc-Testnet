@@ -115,6 +115,9 @@
   "chainsgreets": {
     "enabled": true
   },
+  "paymearc": {
+    "enabled": true
+  },
   "loop_cycle": {
     "enabled": true,
     "sleep_seconds": 3600

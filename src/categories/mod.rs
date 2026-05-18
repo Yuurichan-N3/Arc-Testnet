@@ -16,3 +16,4 @@ pub mod paytag;
 pub mod arcfx;
 pub mod chainstreak;
 pub mod chainsgreets;
+pub mod paymearc;

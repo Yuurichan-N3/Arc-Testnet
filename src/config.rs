@@ -22,6 +22,7 @@ pub struct Config {
     pub paytag: Option<PaytagConfig>,
     pub arcfx: Option<ArcfxConfig>,
     pub chainstreak: Option<ChainstreakConfig>,
+    pub chainsgreets: Option<ChainsgreetsConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -191,6 +192,11 @@ pub struct ChainstreakConfig {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+pub struct ChainsgreetsConfig {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 pub struct LoopConfig {
     pub enabled: bool,
     pub sleep_seconds: u64,
@@ -349,6 +355,10 @@ impl Config {
         self.chainstreak.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
 
+    pub fn chainsgreets_enabled(&self) -> bool {
+        self.chainsgreets.as_ref().map(|c| c.enabled).unwrap_or(false)
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -411,6 +421,7 @@ pub fn load_config() -> Result<Config> {
             "paytag": { "enabled": true },
             "arcfx": { "enabled": true },
             "chainstreak": { "enabled": true },
+            "chainsgreets": { "enabled": true },
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

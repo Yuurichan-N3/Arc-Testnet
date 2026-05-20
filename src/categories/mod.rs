@@ -17,3 +17,5 @@ pub mod arcfx;
 pub mod chainstreak;
 pub mod chainsgreets;
 pub mod paymearc;
+pub mod inuxarc;
+pub mod yarcgmgn;

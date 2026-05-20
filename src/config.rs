@@ -24,6 +24,8 @@ pub struct Config {
     pub chainstreak: Option<ChainstreakConfig>,
     pub chainsgreets: Option<ChainsgreetsConfig>,
     pub paymearc: Option<PaymearcConfig>,
+    pub inuxarc: Option<InuxarcConfig>,
+    pub yarcgmgn: Option<YarcgmgnConfig>,
     pub loop_cycle: Option<LoopConfig>,
 }
 
@@ -203,6 +205,12 @@ pub struct PaymearcConfig {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+pub struct InuxarcConfig {}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct YarcgmgnConfig {}
+
+#[derive(Debug, Deserialize, Clone)]
 pub struct LoopConfig {
     pub enabled: bool,
     pub sleep_seconds: u64,
@@ -369,6 +377,14 @@ impl Config {
         self.paymearc.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
 
+    pub fn inuxarc_enabled(&self) -> bool {
+        self.inuxarc.is_some()
+    }
+
+    pub fn yarcgmgn_enabled(&self) -> bool {
+        self.yarcgmgn.is_some()
+    }
+
     pub fn loop_enabled(&self) -> bool {
         self.loop_cycle.as_ref().map(|c| c.enabled).unwrap_or(false)
     }
@@ -433,6 +449,8 @@ pub fn load_config() -> Result<Config> {
             "chainstreak": { "enabled": true },
             "chainsgreets": { "enabled": true },
             "paymearc": { "enabled": true },
+            "inuxarc": {},
+            "yarcgmgn": {},
             "loop_cycle": { "enabled": false, "sleep_seconds": 7200 }
         });
         fs::write(&cfg_path, serde_json::to_string_pretty(&sample)?)

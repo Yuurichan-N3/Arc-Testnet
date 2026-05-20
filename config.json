@@ -118,6 +118,8 @@
   "paymearc": {
     "enabled": true
   },
+  "inuxarc": {},
+  "yarcgmgn": {},
   "loop_cycle": {
     "enabled": true,
     "sleep_seconds": 3600

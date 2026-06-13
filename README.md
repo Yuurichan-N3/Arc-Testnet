@@ -2,7 +2,7 @@
 
 <img width="100%" alt="header" src="https://capsule-render.vercel.app/api?type=waving&height=210&text=Arc%20Testnet%20Bot&fontAlign=50&fontAlignY=36&fontSize=56&desc=Multi-Category%20On-Chain%20Automation%20%7C%20Multi-Wallet%20%7C%20Proxy%20Support&descAlign=50&descAlignY=58"/>
 
-<img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Auto+Watchoor+%7C+Good+Morning+%26+Good+Night;Auto+SuperBridge+USDC+Cross-chain;Auto+ZK+Codex+Say+GM+%26+Deploy+Contract;Auto+OnchainGM+%7C+Mint+Badge+%7C+Deploy;Auto+SwapArc+%7C+Swap+%26+Add+Liquidity;Auto+Axpha+%7C+Swap+USDC+to+EURC+%2F+AD+%2F+CIRCLE;Auto+Curve+Dex+%7C+Swap+%2F+Add+LP+%2F+Stake+Deposit;Auto+Sweet+Haus+%7C+Mint+NFT;Auto+Onmifun+%7C+Swap+%26+Add+LP;Auto+Flow+Three+%7C+Deposit+%26+Withdraw;Auto+Omnihub+%7C+Mint+Shrimp+NFT;Auto+Flow+On+Arc+%7C+Faucet+%2F+Claim+%2F+Add+LP;Auto+Presto+Dex+%7C+Swap+%2F+Add+LP+%2F+Bridge;Auto+Painitiepay+%7C+Pay+USDC;Auto+Paytag+%7C+Register+%26+Bridge+Multi-Chain;Auto+Arc+FX+%7C+Faucet+%2F+Swap+%2F+LP+%2F+Stake;Auto+Chain+Streaks+%7C+Daily+Check-in"/>
+<img alt="typing" src="https://readme-typing-svg.demolab.com?font=Inter&size=18&duration=3000&pause=650&center=true&vCenter=true&width=900&lines=Auto+Watchoor+%7C+Good+Morning+%26+Good+Night;Auto+SuperBridge+USDC+Cross-chain;Auto+ZK+Codex+Say+GM+%26+Deploy+Contract;Auto+OnchainGM+%7C+Mint+Badge+%7C+Deploy;Auto+SwapArc+%7C+Swap+%26+Add+Liquidity;Auto+Axpha+%7C+Curve+Dex+%7C+Sweet+Haus;Auto+Onmifun+%7C+Flow+Three+%7C+Omnihub;Auto+Flow+On+Arc+%7C+Presto+Dex+%7C+Painitiepay;Auto+Paytag+%7C+Arc+FX+%7C+Chain+Streaks;Auto+Payme+Arc+%7C+Inuxarc+%7C+Yarcgmgn"/>
 
 <p>
   <img alt="rust" src="https://img.shields.io/badge/Rust-2021-f74c00?logo=rust&logoColor=white"/>
@@ -14,7 +14,7 @@
 
 <p>
   <b>Arc Testnet Bot</b> is a full automation bot for the Arc Testnet network.<br/>
-  It handles multiple on-chain activity categories in one cycle: Watchoor interactions, SuperBridge USDC deposits, ZK Codex GM and contract deployments, OnchainGM with badge minting, SwapArc token swaps with liquidity provisioning, Axpha USDC swaps, Curve Dex swaps with LP and staking, Sweet Haus NFT minting, Onmifun swaps and LP, Flow Three deposit and withdraw, Omnihub NFT minting, Flow On Arc faucet claiming with LP, Presto Dex swaps with LP and bridging, Painitiepay USDC payments, Paytag username registration with multi-chain bridging, Arc FX full cycle with faucet, swaps, LP and staking, and Chain Streaks daily check-in -- all running automatically across multiple wallets.<br/>
+  It handles multiple on-chain activity categories in one cycle: Watchoor interactions, SuperBridge USDC deposits, ZK Codex GM and contract deployments, OnchainGM with badge minting, SwapArc token swaps with liquidity provisioning, Axpha USDC swaps, Curve Dex swaps with LP and staking, Sweet Haus NFT minting, Onmifun swaps and LP, Flow Three deposit and withdraw, Omnihub NFT minting, Flow On Arc faucet claiming with LP, Presto Dex swaps with LP and bridging, Painitiepay USDC payments, Paytag username registration with multi-chain bridging, Arc FX full cycle with faucet, swaps, LP and staking, Chain Streaks daily check-in, Payme Arc USDC payments, Inuxarc GM and GN, and Yarcgmgn GM and GN -- all running automatically across multiple wallets.<br/>
   Built and distributed by <b>Yuurisandesu</b>.
 </p>
 
@@ -28,6 +28,7 @@
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Running the Bot](#running-the-bot)
+- [Download Prebuilt Binary](#download-prebuilt-binary)
 - [Features](#features)
 - [File Structure](#file-structure)
 - [Disclaimer](#disclaimer)
@@ -36,7 +37,7 @@
 
 ## Requirements
 
-- Rust `1.70+` (includes `cargo`)
+- Rust `1.70+` (includes `cargo`) -- only needed if building from source
 - Git
 
 ---
@@ -176,31 +177,39 @@ Then run:
 .\target\release\arc-bot.exe
 ```
 
-### Download Prebuilt Binary
+---
 
-If you do not want to build from source, prebuilt binaries are automatically compiled on every push to main via GitHub Actions for all three platforms.
+## Download Prebuilt Binary
+
+If you do not want to build from source, prebuilt binaries are automatically compiled on every push to main via GitHub Actions across 7 targets.
 
 Download the latest binaries from the Actions page:
 https://github.com/Yuurichan-N3/Arc-Testnet/actions/workflows/build.yml
 
-Open the latest successful run and scroll to the Artifacts section. Three artifacts are available:
+Open the latest successful run and scroll to the Artifacts section. All binaries are retained for 90 days per build.
 
-| Artifact | Platform |
-|---|---|
-| `arc-bot-linux-x86_64` | Linux (x86_64) |
-| `arc-bot-windows-x86_64` | Windows (x86_64) |
-| `arc-bot-macos-aarch64` | macOS (Apple Silicon) |
+| Artifact | Platform | Notes |
+|---|---|---|
+| `arc-bot-linux-x86_64` | Linux x86_64 | Standard 64-bit Linux |
+| `arc-bot-linux-aarch64` | Linux ARM64 | Raspberry Pi, ARM servers |
+| `arc-bot-linux-armv7` | Linux ARMv7 | Older ARM boards |
+| `arc-bot-windows-x86_64` | Windows x86_64 | Standard 64-bit Windows |
+| `arc-bot-macos-aarch64` | macOS Apple Silicon | M1, M2, M3 |
+| `arc-bot-android-aarch64` | Android ARM64 | Termux on modern phones |
+| `arc-bot-android-armv7` | Android ARMv7 | Termux on older phones |
 
-All binaries are retained for 7 days per build.
-
-**Linux / macOS:** after downloading, make the binary executable then run it:
+**Linux / macOS / Termux -- after downloading:**
 
 ```bash
 chmod +x arc-bot
 ./arc-bot
 ```
 
-**Windows:** run the `.exe` directly from your terminal or double-click it.
+**Windows -- run from terminal:**
+
+```bash
+.\arc-bot.exe
+```
 
 ---
 
@@ -257,6 +266,15 @@ The bot runs a comprehensive Arc FX cycle. It claims from the faucet if availabl
 ### Chain Streaks
 The bot submits a daily check-in transaction to the Chain Streaks contract to maintain the streak. Auto-skipped if the check-in for the current period has already been completed.
 
+### Payme Arc
+The bot approves USDC spending on the Payme Arc contract, then submits a payment transaction with a randomly generated 32-byte reference ID. The reference is generated fresh per transaction using a timestamp-based XOR shift so every payment has a unique identifier.
+
+### Inuxarc
+The bot sends a Say GM and a Say GN transaction to the Inuxarc contract. Each action is individually preflight-checked before sending -- if the transaction would revert (indicating it has already been done today), it is skipped silently. Nonce is refreshed between the two actions.
+
+### Yarcgmgn
+The bot sends a Say GM and a Say GN transaction to the Yarcgmgn contract. Operates identically to Inuxarc with the same preflight skip logic, using its own separate contract address.
+
 ### Multi Wallet
 All wallets defined in `.env` are processed sequentially within every cycle. Each wallet gets its own RPC connection and the wallet index is shown in logs for easy tracking.
 
@@ -274,7 +292,7 @@ Proxies are loaded from `proxy.txt` and rotated across wallets and RPC connectio
 Arc-Testnet/
 ├── .github/
 │   └── workflows/
-│       └── build.yml                # CI: auto build for Linux, Windows, and macOS on push
+│       └── build.yml                # CI: 7-target matrix build, artifacts retained 90 days
 ├── docs/
 │   └── ARCHITECTURE.md             # Internal execution flow and module documentation
 ├── src/
@@ -305,7 +323,10 @@ Arc-Testnet/
 │       ├── painitiepay/             # Transfer USDC payment
 │       ├── paytag/                  # Register username, Bridge to ARB/ETH/Base Sepolia
 │       ├── arcfx/                   # Faucet, Swap aJPYC/aUSDC, Add LP, Check-in, Stake
-│       └── chainstreak/             # Daily check-in streak
+│       ├── chainstreak/             # Daily check-in streak
+│       ├── paymearc/                # Approve USDC, Pay with random reference ID
+│       ├── inuxarc/                 # Say GM and GN with preflight skip
+│       └── yarcgmgn/               # Say GM and GN with preflight skip
 ├── assets/
 │   └── standard.flf                # ASCII font for banner
 ├── Cargo.toml                       # Project manifest and dependencies
@@ -327,5 +348,5 @@ This tool is built for educational and technical exploration purposes. Use it wi
 ---
 
 <div align="center">
-<img width="100%" alt="footer" src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer"/>
+<img width=\"100%\" alt=\"footer\" src=\"https://capsule-render.vercel.app/api?type=waving&height=120&section=footer\"/>
 </div>

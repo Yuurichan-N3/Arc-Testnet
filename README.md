@@ -91,8 +91,8 @@ cd Arc-Testnet
 Copy `.env.example` to `.env` and fill in your wallet private keys, one per line:
 
 ```env
-PRIVATEKEY_1=your_private_key_here
-PRIVATEKEY_2=your_private_key_here
+PRIVATEKEY_1=0x
+PRIVATEKEY_2=0x
 ```
 
 Add as many `PRIVATEKEY_N` entries as wallets you want to run. All wallets are processed sequentially per cycle.
@@ -348,5 +348,5 @@ This tool is built for educational and technical exploration purposes. Use it wi
 ---
 
 <div align="center">
-<img width=\"100%\" alt=\"footer\" src=\"https://capsule-render.vercel.app/api?type=waving&height=120&section=footer\"/>
+<img width="100%" alt="footer" src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer"/>
 </div>
